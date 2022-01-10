@@ -1,24 +1,13 @@
 import React, { useContext, useEffect, Fragment } from "react"
-import { Link } from "react-router-dom"
+import { Link, useMatch } from "react-router-dom"
 import { Repos } from "../components/Repos"
 import { GitHubContext } from '../context/GitHub/GitHubContext'
 
-export const Profile = ({match})  => {
-    console.log(match)
+export const Profile = () => {
+    const match = useMatch("/profile/:name")
+    // console.log(match)
+
     const { getUser, getRepos, loading, user, repos } = useContext(GitHubContext)
-
-        const urlName = match.params.name
-
-    useEffect(() => {
-
-        getUser(urlName)
-        getRepos(urlName)
-        //eslint-disable-next-line
-    }, [])
-
-    if (loading) {
-        return <p className="text-center">Загрузка.....</p>
-    }
 
     const {
         name, company, avatar_url,
@@ -27,6 +16,19 @@ export const Profile = ({match})  => {
         following,
         public_repos, public_gists
     } = user
+    const urlName = match.params.name
+    useEffect(() => {
+
+        getUser(urlName)
+        getRepos(urlName)
+        //eslint-disable-next-line
+    }, [urlName])
+
+    if (loading) {
+        return <p className="text-center">Загрузка.....</p>
+    }
+
+
 
 
     return (

@@ -27,32 +27,32 @@ export const GitHubState = ({children}) => {
         const response = await axios.get(
             withCreds(`https://api.github.com/search/users?q=${value}&`)
         )
-
         dispatch({
             type: SEARCH_USERS,
-            payload: response.data.items
+            payload: response.data.items,
         })
+        
     }
 
-    const getUser = async name => {
+    const getUser = async username => {
         setLoading()
         
         const response = await axios.get(
-            withCreds(`https://api.github.com/users/${name}?`)
+            withCreds(`https://api.github.com/users/${username}?`)
 
         )
 
         dispatch({
             type: GET_USER,
-            payload: response.data
+            payload: response.data,
         })
+        
     }
 
-    const getRepos = async name => {
+    const getRepos = async username => {
         setLoading()
         const response = await axios.get(
-            withCreds(`https://api.github.com/users/${name}/repos?per_page=5&`)
-
+            withCreds(`https://api.github.com/users/${username}/repos?per_page=5&`)
         )
 
         dispatch({
